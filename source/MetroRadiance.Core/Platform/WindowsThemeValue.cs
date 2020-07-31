@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,15 +9,68 @@ using MetroRadiance.Utilities;
 
 namespace MetroRadiance.Platform
 {
-	public abstract class WindowsThemeValue<T>
+	public abstract class WindowsThemeValue
+	{
+		internal protected static ListenerWindow ListenerWindowTarget { get; } = new ListenerWindow();
+
+
+		protected abstract IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled);
+
+		internal protected class ListenerWindow : TransparentWindow
+		{
+			private readonly Collection<HwndSourceHook> _hooks = new Collection<HwndSourceHook>();
+
+			public ListenerWindow()
+			{
+				this.Name = "Windows theme listener window";
+			}
+
+			public void Add(HwndSourceHook hook)
+			{
+				lock (this._hooks)
+				{
+					if (this._hooks.Count == 0)
+					{
+						ListenerWindowTarget.Show();
+					}
+					this._hooks.Add(hook);
+				}
+			}
+
+			public void Remove(HwndSourceHook hook)
+			{
+				lock (this._hooks)
+				{
+					this._hooks.Remove(hook);
+					if (this._hooks.Count == 0)
+					{
+						ListenerWindowTarget.Close();
+					}
+				}
+			}
+
+			protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+			{
+				lock (this._hooks)
+				{
+					foreach (var hook in this._hooks)
+					{
+						hook(hwnd, msg, wParam, lParam, ref handled);
+					}
+				}
+				return handled ? IntPtr.Zero : base.WndProc(hwnd, msg, wParam, lParam, ref handled);
+			}
+		}
+	}
+
+	public abstract class WindowsThemeValue<T> : WindowsThemeValue
 	{
 		private event EventHandler<T> _changedEvent;
 		private readonly HashSet<EventHandler<T>> _handlers = new HashSet<EventHandler<T>>();
-		private ListenerWindow _listenerWindow;
 		private T _current;
 		private bool _hasCache;
 
-		private bool RequireCallGetValue => !this._hasCache || this._listenerWindow == null;
+		private bool RequireCallGetValue => !this._hasCache;
 
 		/// <summary>
 		/// 現在の設定値を取得します。
@@ -69,10 +123,9 @@ namespace MetroRadiance.Platform
 			{
 				this._changedEvent += listener;
 
-				if (this._listenerWindow == null)
+				if (this._handlers.Count == 1)
 				{
-					this._listenerWindow = new ListenerWindow(this.GetType().Name, this.WndProc);
-					this._listenerWindow.Show();
+					ListenerWindowTarget.Add(this.WndProc);
 				}
 			}
 		}
@@ -85,38 +138,20 @@ namespace MetroRadiance.Platform
 
 				if (this._handlers.Count == 0)
 				{
-					this._listenerWindow?.Close();
-					this._listenerWindow = null;
+					ListenerWindowTarget.Remove(this.WndProc);
 					this._hasCache = false;
 				}
 			}
 		}
 
-		internal void Update(T data)
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		protected void Update(T data)
 		{
 			this.Current = data;
 			this._changedEvent?.Invoke(this, data);
 		}
 
-		internal abstract T GetValue();
-
-		internal abstract IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled);
-
-		private class ListenerWindow : TransparentWindow
-		{
-			private readonly HwndSourceHook _hook;
-
-			public ListenerWindow(string name, HwndSourceHook hook)
-			{
-				this.Name = $"{name} listener window";
-				this._hook = hook;
-			}
-
-			protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-			{
-				var result = this._hook(hwnd, msg, wParam, lParam, ref handled);
-				return handled ? result : base.WndProc(hwnd, msg, wParam, lParam, ref handled);
-			}
-		}
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		protected abstract T GetValue();
 	}
 }

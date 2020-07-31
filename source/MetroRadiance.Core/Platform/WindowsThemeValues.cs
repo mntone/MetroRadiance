@@ -17,7 +17,7 @@ namespace MetroRadiance.Platform
 
 	public class ThemeValue : WindowsThemeValue<Theme>
 	{
-		internal override Theme GetValue()
+		protected override Theme GetValue()
 		{
 			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 			const string valueName = "AppsUseLightTheme";
@@ -25,7 +25,7 @@ namespace MetroRadiance.Platform
 			return Registry.GetValue(keyName, valueName, null) as int? == 0 ? Theme.Dark : Theme.Light;
 		}
 
-		internal override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WindowsMessages.WM_SETTINGCHANGE)
 			{
@@ -43,7 +43,7 @@ namespace MetroRadiance.Platform
 
 	public class SystemThemeValue : ThemeValue
 	{
-		internal override Theme GetValue()
+		protected override Theme GetValue()
 		{
 			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 			const string valueName = "SystemUsesLightTheme";
@@ -54,7 +54,7 @@ namespace MetroRadiance.Platform
 
 	public class AccentValue : WindowsThemeValue<Color>
 	{
-		internal override Color GetValue()
+		protected override Color GetValue()
 		{
 			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM";
 			const string valueName = "ColorizationColor";
@@ -74,7 +74,7 @@ namespace MetroRadiance.Platform
 			return ColorHelper.GetColorFromInt64(color);
 		}
 
-		internal override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WindowsMessages.WM_DWMCOLORIZATIONCOLORCHANGED)
 			{
@@ -90,9 +90,9 @@ namespace MetroRadiance.Platform
 
 	public sealed class HighContrastValue : WindowsThemeValue<bool>
 	{
-		internal override bool GetValue() => System.Windows.SystemParameters.HighContrast;
+		protected override bool GetValue() => System.Windows.SystemParameters.HighContrast;
 
-		internal override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WindowsMessages.WM_THEMECHANGED)
 			{
@@ -106,7 +106,7 @@ namespace MetroRadiance.Platform
 
 	public sealed class ColorPrevalenceValue : WindowsThemeValue<bool>
 	{
-		internal override bool GetValue()
+		protected override bool GetValue()
 		{
 			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 			const string valueName = "ColorPrevalence";
@@ -114,7 +114,7 @@ namespace MetroRadiance.Platform
 			return Registry.GetValue(keyName, valueName, null) as int? != 0;
 		}
 
-		internal override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WindowsMessages.WM_SETTINGCHANGE)
 			{
@@ -132,7 +132,7 @@ namespace MetroRadiance.Platform
 
 	public sealed class TransparencyValue : WindowsThemeValue<bool>
 	{
-		internal override bool GetValue()
+		protected override bool GetValue()
 		{
 			const string keyName = @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 			const string valueName = "EnableTransparency";
@@ -140,7 +140,7 @@ namespace MetroRadiance.Platform
 			return Registry.GetValue(keyName, valueName, null) as int? != 0;
 		}
 
-		internal override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		protected override IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			if (msg == (int)WindowsMessages.WM_SETTINGCHANGE)
 			{
