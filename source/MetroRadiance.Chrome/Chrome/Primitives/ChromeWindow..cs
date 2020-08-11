@@ -274,9 +274,9 @@ namespace MetroRadiance.Chrome.Primitives
 
 		private bool CheckDpiChange()
 		{
-			if (PerMonitorDpi.IsSupported)
+			if (DpiHelper.IsPerMonitorDpiSupported)
 			{
-				var currentDpi = PerMonitorDpi.GetDpi(this.Owner.Handle);
+				var currentDpi = DpiHelper.GetDpiForWindow(this.Owner.Handle);
 				if (currentDpi != this.CurrentDpi)
 				{
 					this.DpiScaleTransform = currentDpi == this.SystemDpi
@@ -323,7 +323,7 @@ namespace MetroRadiance.Chrome.Primitives
 			this._source.AddHook(this.WndProc);
 			this._handle = source.Handle;
 
-			this.SystemDpi = this.GetSystemDpi() ?? Dpi.Default;
+			this.SystemDpi = DpiHelper.GetDpiForSystem();
 			this.CurrentDpi = this.SystemDpi;
 			this.UpdateDpiResources();
 

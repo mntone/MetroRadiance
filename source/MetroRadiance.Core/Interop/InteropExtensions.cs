@@ -15,6 +15,12 @@ namespace MetroRadiance.Interop
 		/// <returns>
 		/// X 軸 および Y 軸それぞれの DPI 設定値を表す <see cref="Dpi"/> 構造体。
 		/// </returns>
+		/// <remarks>
+		/// マニフェストでPer-monitor DPIが定義されており、
+		/// .NET Framework 4.6.2 以降かつ Windows 10 Anniversary Update で実行している場合、
+		/// この関数はモニター DPI を返します。
+		/// </remarks>
+		[Obsolete("MetroRadiance.Platform.DpiHelper.GetDpiForSystem() を使用してください")]
 		public static Dpi? GetSystemDpi(this Visual visual)
 		{
 			var source = PresentationSource.FromVisual(visual);

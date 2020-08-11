@@ -7,6 +7,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using MetroRadiance.Interop;
 using MetroRadiance.Interop.Win32;
+using MetroRadiance.Platform;
 using ShellChrome = System.Windows.Shell.WindowChrome;
 using MetroChrome = MetroRadiance.Chrome.WindowChrome;
 

@@ -122,6 +122,15 @@ namespace MetroRadiance.Interop.Win32
 		[DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
 		public static extern IntPtr MonitorFromWindow(IntPtr hwnd, MonitorDefaultTo dwFlags);
 
+		[DllImport("user32.dll", SetLastError = true, ExactSpelling = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		public static extern bool IsProcessDPIAware();
+
+		[DllImport("user32.dll", ExactSpelling = true)]
+		public static extern uint GetDpiForSystem();
+
+		[DllImport("user32.dll", ExactSpelling = true)]
+		public static extern uint GetDpiForWindow(IntPtr hWnd);
 		[DllImport("user32.dll")]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		public static extern bool IsWindow(IntPtr hWnd);
@@ -152,6 +161,18 @@ namespace MetroRadiance.Interop.Win32
 
 		[DllImport("user32.dll")]
 		public static extern bool CloseWindow(IntPtr hWnd);
+
+		[DllImport("user32.dll", ExactSpelling = true)]
+		public extern static IntPtr GetWindowDC(IntPtr hWnd);
+
+		[DllImport("user32.dll", EntryPoint = "ReleaseDC", ExactSpelling = true)]
+		private extern static int _ReleaseDC(IntPtr hWnd, IntPtr hDC);
+
+		public static void ReleaseDC(IntPtr hWnd, IntPtr hDC)
+		{
+			var ret = _ReleaseDC(hWnd, hDC);
+			if (ret != 1) throw new Win32Exception();
+		}
 
 		[DllImport("user32.dll", SetLastError = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
