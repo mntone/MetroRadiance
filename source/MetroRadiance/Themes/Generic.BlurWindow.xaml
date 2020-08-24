@@ -3,10 +3,27 @@
 					xmlns:controls="clr-namespace:MetroRadiance.UI.Controls"
 					xmlns:properties="clr-namespace:MetroRadiance.Properties">
 
-	<Style TargetType="{x:Type controls:BlurWindow}"
-		   BasedOn="{StaticResource {x:Type Window}}">
+	<Style TargetType="{x:Type controls:BlurWindow}">
 		<Setter Property="FontFamily"
 				Value="{DynamicResource {x:Static properties:Resources.FontFamily}}" />
+		<Setter Property="Background"
+				Value="Transparent" />
+		<Setter Property="SnapsToDevicePixels"
+				Value="True" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type controls:BlurWindow}">
+					<Border Background="{TemplateBinding Background}"
+							BorderBrush="{TemplateBinding BorderBrush}"
+							BorderThickness="{TemplateBinding BorderThickness}"
+							SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+						<AdornerDecorator>
+							<ContentPresenter LayoutTransform="{TemplateBinding DpiScaleTransform}" />
+						</AdornerDecorator>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
 	</Style>
 
 </ResourceDictionary>

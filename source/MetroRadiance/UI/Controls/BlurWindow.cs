@@ -8,7 +8,7 @@ using MetroRadiance.Platform;
 
 namespace MetroRadiance.UI.Controls
 {
-	public class BlurWindow : Window
+	public class BlurWindow : WindowCompat
 	{
 		protected internal static bool IsWindows10 { get; }
 

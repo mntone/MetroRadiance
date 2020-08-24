@@ -16,7 +16,7 @@ namespace MetroRadiance.UI.Controls
 	/// Metro スタイル風のウィンドウを表します。
 	/// </summary>
 	[TemplatePart(Name = PART_ResizeGrip, Type = typeof(FrameworkElement))]
-	public class MetroWindow : Window
+	public class MetroWindow : WindowCompat
 	{
 #pragma warning disable IDE1006
 		private const string PART_ResizeGrip = "PART_ResizeGrip";
@@ -26,16 +26,6 @@ namespace MetroRadiance.UI.Controls
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(MetroWindow), new FrameworkPropertyMetadata(typeof(MetroWindow)));
 		}
-
-		/// <summary>
-		/// WPF が認識しているシステムの DPI (プライマリ モニターの DPI)。
-		/// </summary>
-		private Dpi _systemDpi;
-
-		/// <summary>
-		/// このウィンドウが表示されているモニターの現在の DPI。
-		/// </summary>
-		internal Dpi CurrentDpi { get; set; }
 
 		private HwndSource _source;
 		private FrameworkElement _resizeGrip;
@@ -59,22 +49,6 @@ namespace MetroRadiance.UI.Controls
 
 			ShellChrome.SetWindowChrome(window, chrome);
 		}
-
-		#endregion
-
-		#region DpiScaleTransform dependency property
-
-		/// <summary>
-		/// DPI スケーリングを実現する <see cref="Transform" /> を取得または設定します。
-		/// </summary>
-		public Transform DpiScaleTransform
-		{
-			get { return (Transform)this.GetValue(DpiScaleTransformProperty); }
-			set { this.SetValue(DpiScaleTransformProperty, value); }
-		}
-
-		public static readonly DependencyProperty DpiScaleTransformProperty =
-			DependencyProperty.Register("DpiScaleTransform", typeof(Transform), typeof(MetroWindow), new UIPropertyMetadata(Transform.Identity));
 
 		#endregion
 
@@ -143,9 +117,9 @@ namespace MetroRadiance.UI.Controls
 			var captionBar = this._captionBar;
 			if (captionBar != null)
 			{
-				if (this._systemDpi.Y > 0)
+				if (this.SystemDpi.Y > 0)
 				{
-					chrome.CaptionHeight = captionBar.ActualHeight * this.CurrentDpi.Y / this._systemDpi.Y;
+					chrome.CaptionHeight = captionBar.ActualHeight * this.DpiScaleTransform.Value.M22;
 				}
 				else
 				{
@@ -173,17 +147,6 @@ namespace MetroRadiance.UI.Controls
 			this._source = PresentationSource.FromVisual(this) as HwndSource;
 			if (this._source == null) return;
 			this._source.AddHook(this.WndProc);
-
-			this._systemDpi = this.GetSystemDpi() ?? Dpi.Default;
-			if (PerMonitorDpi.IsSupported)
-			{
-				this.CurrentDpi = this._source.GetDpi();
-				this.ChangeDpi(this.CurrentDpi);
-			}
-			else
-			{
-				this.CurrentDpi = this._systemDpi;
-			}
 
 			if (this.WindowSettings == null)
 			{
@@ -281,14 +244,6 @@ namespace MetroRadiance.UI.Controls
 					if (handled) return result;
 				}
 			}
-			else if (msg == (int)WindowsMessages.WM_DPICHANGED)
-			{
-				var dpiX = wParam.ToLoWord();
-				var dpiY = wParam.ToHiWord();
-				var rect = (RECT)Marshal.PtrToStructure(lParam, typeof(RECT));
-				this.ChangeDpi(new Dpi(dpiX, dpiY), rect);
-				handled = true;
-			}
 
 			return IntPtr.Zero;
 		}
@@ -319,31 +274,7 @@ namespace MetroRadiance.UI.Controls
 			return (IntPtr)(WindowValidRects.WVR_ALIGNTOP | WindowValidRects.WVR_ALIGNLEFT | WindowValidRects.WVR_VALIDRECTS);
 		}
 
-		private void ChangeDpi(Dpi dpi, RECT rect)
-		{
-			if (!PerMonitorDpi.IsSupported) return;
-
-			this.ChangeDpi(dpi);
-
-			User32.SetWindowPos(
-				this._source.Handle,
-				IntPtr.Zero,
-				rect.Left,
-				rect.Top,
-				rect.Right - rect.Left,
-				rect.Bottom - rect.Top,
-				SetWindowPosFlags.SWP_NOZORDER | SetWindowPosFlags.SWP_NOOWNERZORDER);
-
-			this.CurrentDpi = dpi;
-
-			this.UpdateIsCaptionBarHeight();
-		}
-
-		private void ChangeDpi(Dpi dpi)
-		{
-			this.DpiScaleTransform = dpi == this._systemDpi
-				? Transform.Identity
-				: new ScaleTransform((double)dpi.X / this._systemDpi.X, (double)dpi.Y / this._systemDpi.Y);
-		}
+		protected override void OnDpiChanged(Dpi oldDpi, Dpi newDpi)
+			=> this.UpdateIsCaptionBarHeight();
 	}
 }

@@ -19,7 +19,7 @@
 							Background="{DynamicResource BackgroundBrushKey}"
 							Padding="6,4"
 							SnapsToDevicePixels="True"
-							LayoutTransform="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:MetroWindow}}, Path=DpiScaleTransform}">
+							LayoutTransform="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type controls:WindowCompat}}, Path=DpiScaleTransform}">
 						<ContentPresenter />
 					</Border>
 				</ControlTemplate>
