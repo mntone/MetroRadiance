@@ -4,7 +4,7 @@
     <AvailableItemName Include="NativeBinary" />
   </ItemGroup>
   <ItemGroup>
-    <NativeBinary Include="$(MSBuildThisFileDirectory)\net46\*" />
+    <NativeBinary Include="$(MSBuildThisFileDirectory)\any\*" />
   </ItemGroup>
   <PropertyGroup>
     <PrepareForRunDependsOn>

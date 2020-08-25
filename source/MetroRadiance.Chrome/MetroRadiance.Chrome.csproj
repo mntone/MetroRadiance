@@ -1,126 +1,54 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{21B4AD15-D9FA-4873-BFAD-1EEEFBC6C264}</ProjectGuid>
-    <OutputType>library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworks>net45;netcoreapp3.1</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <UseWPF>true</UseWPF>
     <RootNamespace>MetroRadiance</RootNamespace>
-    <AssemblyName>MetroRadiance.Chrome</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <TargetFrameworkProfile />
+
+    <Version>2.2.0</Version>
+    <Authors>grabacr.net</Authors>
+    <Company>grabacr.net</Company>
+    <Product>MetroRadiance</Product>
+    <Description>Modern WPF Themes (chrome)</Description>
+    <Copyright>Copyright © 2014–2020 Manato KAMEYA</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Grabacr07/MetroRadiance</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Grabacr07/MetroRadiance</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>WPF Metro Modern</PackageTags>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\MetroRadiance.Chrome.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <ProjectReference Include="..\MetroRadiance.Core\MetroRadiance.Core.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <Page Include="Themes\Generic.ChromeWindow.xaml">
-      <SubType>Designer</SubType>
-      <DependentUpon>Generic.xaml</DependentUpon>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.GlowingEdge.Bottom.xaml">
-      <SubType>Designer</SubType>
-      <DependentUpon>Generic.xaml</DependentUpon>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.GlowingEdge.Left.xaml">
-      <SubType>Designer</SubType>
-      <DependentUpon>Generic.xaml</DependentUpon>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.GlowingEdge.Right.xaml">
-      <SubType>Designer</SubType>
-      <DependentUpon>Generic.xaml</DependentUpon>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.GlowingEdge.Top.xaml">
-      <SubType>Designer</SubType>
-      <DependentUpon>Generic.xaml</DependentUpon>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Chrome\GlowingEdge..cs" />
-    <Compile Include="Chrome\GlowingEdge.Bottom.cs" />
-    <Compile Include="Chrome\GlowingEdge.Left.cs" />
-    <Compile Include="Chrome\GlowingEdge.Right.cs" />
-    <Compile Include="Chrome\GlowingEdge.Top.cs" />
-    <Compile Include="Chrome\WindowChrome.cs" />
-    <Compile Include="Chrome\Primitives\ChromeWindow.Bottom.cs" />
-    <Compile Include="Chrome\Primitives\ChromeWindow.Top.cs" />
-    <Compile Include="Chrome\Primitives\ChromeWindow.Left.cs" />
-    <Compile Include="Chrome\Primitives\ChromeWindow.Right.cs" />
-    <Compile Include="Chrome\InternalExtensions.cs" />
-    <Compile Include="Chrome\Primitives\WindowWrapper.cs" />
-    <Compile Include="Chrome\Primitives\ChromeWindow..cs" />
-    <Compile Include="Chrome\SizingMode.cs" />
-    <Compile Include="Platform\IChromeOwner.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="app.config" />
-    <None Include="MetroRadiance.Chrome.nuspec">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Properties\Settings.settings">
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <AppDesigner Include="Properties\" />
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\MetroRadiance.Core\MetroRadiance.Core.csproj">
-      <Project>{a6b0a741-5be0-479d-b813-e65672350057}</Project>
-      <Name>MetroRadiance.Core</Name>
-    </ProjectReference>
+    <Page Remove="Themes\Generic.*.xaml" />
+    <Page Include="Themes\Generic.*.xaml">
+      <SubType>Designer</SubType>
+      <DependentUpon>Generic.xaml</DependentUpon>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

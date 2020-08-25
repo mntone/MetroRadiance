@@ -11,6 +11,13 @@ using MetroRadiance.Media;
 using MetroRadiance.Platform;
 using MetroRadiance.Utilities;
 
+#if NETFRAMEWORK
+using UriTemplateAlias = System.UriTemplate;
+#else
+using UriTemplate.Core;
+using UriTemplateAlias = UriTemplate.Core.UriTemplate;
+#endif
+
 namespace MetroRadiance.UI
 {
 	/// <summary>
@@ -24,9 +31,9 @@ namespace MetroRadiance.UI
 
 		#endregion
 
-		private static readonly UriTemplate themeTemplate = new UriTemplate(@"Themes/{theme}.xaml");
-		private static readonly UriTemplate accentTemplate = new UriTemplate(@"Themes/Accents/{accent}.xaml");
-		private static readonly Uri templateBaseUri = new Uri(@"pack://application:,,,/MetroRadiance;component");
+		private static readonly UriTemplateAlias themeTemplate = new UriTemplateAlias(@"Themes/{theme}.xaml");
+		private static readonly UriTemplateAlias accentTemplate = new UriTemplateAlias(@"Themes/Accents/{accent}.xaml");
+		private static readonly Uri templateBaseUri = new Uri(@"pack://application:,,,/MetroRadiance;component/");
 
 		private Dispatcher dispatcher;
 		private IDisposable windowsAccentListener;
@@ -334,6 +341,12 @@ namespace MetroRadiance.UI
 		/// <returns><paramref name="uri"/> がテーマのリソースを指す URI の場合は true、それ以外の場合は false。</returns>
 		private static bool CheckThemeResourceUri(Uri uri)
 		{
+#if !NETFRAMEWORK
+			if (!uri.IsAbsoluteUri)
+			{
+				uri = new Uri(templateBaseUri, uri);
+			}
+#endif
 			return themeTemplate.Match(templateBaseUri, uri) != null;
 		}
 
@@ -343,6 +356,12 @@ namespace MetroRadiance.UI
 		/// <returns><paramref name="uri"/> がアクセント カラーのリソースを指す URI の場合は true、それ以外の場合は false。</returns>
 		private static bool CheckAccentResourceUri(Uri uri)
 		{
+#if !NETFRAMEWORK
+			if (!uri.IsAbsoluteUri)
+			{
+				uri = new Uri(templateBaseUri, uri);
+			}
+#endif
 			return accentTemplate.Match(templateBaseUri, uri) != null;
 		}
 

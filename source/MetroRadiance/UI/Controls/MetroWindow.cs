@@ -300,7 +300,7 @@ namespace MetroRadiance.UI.Controls
 		{
 			if (!User32.IsZoomed(hWnd)) return IntPtr.Zero;
 
-			var rcsize = Marshal.PtrToStructure<NCCALCSIZE_PARAMS>(lParam);
+			var rcsize = (NCCALCSIZE_PARAMS)Marshal.PtrToStructure(lParam, typeof(NCCALCSIZE_PARAMS));
 			if (rcsize.lppos.flags.HasFlag(SetWindowPosFlags.SWP_NOSIZE)) return IntPtr.Zero;
 
 			var hMonitor = User32.MonitorFromWindow(hWnd, MonitorDefaultTo.MONITOR_DEFAULTTONEAREST);

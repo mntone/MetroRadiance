@@ -18,7 +18,9 @@ namespace MetroRadiance.Showcase.UI
 {
 	public partial class ExternalChromeSamples
 	{
+#if NETFRAMEWORK
 		private WindowChrome _metroChrome;
+#endif
 
 		public ExternalChromeSamples()
 		{
@@ -32,12 +34,14 @@ namespace MetroRadiance.Showcase.UI
 			var viewModel = (WindowViewModel)this.WindowsListView.SelectedItem;
 			if (viewModel == null) return;
 
+#if NETFRAMEWORK
 			var externalWindow = new ExternalWindow(viewModel.Handle);
 			if (this._metroChrome == null)
 			{
 				this._metroChrome = new WindowChrome();
 			}
 			this._metroChrome.Attach(externalWindow);
+#endif
 		}
 
 		private void HandleRefreshClicked(object sender, RoutedEventArgs e)
@@ -47,6 +51,7 @@ namespace MetroRadiance.Showcase.UI
 
 		private static WindowViewModel[] GetWindowViewModels()
 		{
+#if NETFRAMEWORK
 			var currentProcess = Process.GetCurrentProcess();
 			var windows = NativeMethods.GetWindows()
 				.Where(IsValidWindow)
@@ -61,6 +66,9 @@ namespace MetroRadiance.Showcase.UI
 				.Where(tuple => tuple.Item1.Id != currentProcess.Id);
 			var viewModels = windows.Select(tuple => new WindowViewModel(tuple.Item1, tuple.Item2));
 			return viewModels.ToArray();
+#else
+			return new WindowViewModel[0];
+#endif
 		}
 
 		private static bool IsValidWindow(IntPtr hWnd)

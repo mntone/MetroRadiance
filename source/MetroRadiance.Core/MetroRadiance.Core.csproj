@@ -1,108 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A6B0A741-5BE0-479D-B813-E65672350057}</ProjectGuid>
-    <OutputType>library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworks>net45;netcoreapp3.1</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <UseWPF>true</UseWPF>
     <RootNamespace>MetroRadiance</RootNamespace>
-    <AssemblyName>MetroRadiance.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <TargetFrameworkProfile />
+
+    <Version>2.4.1</Version>
+    <Authors>grabacr.net</Authors>
+    <Company>grabacr.net</Company>
+    <Product>MetroRadiance</Product>
+    <Description>Modern WPF Themes (core)</Description>
+    <Copyright>Copyright © 2014–2020 Manato KAMEYA</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Grabacr07/MetroRadiance</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Grabacr07/MetroRadiance</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>WPF Metro Modern</PackageTags>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\MetroRadiance.Core.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Interop\Appbar.cs" />
-    <Compile Include="Interop\Dpi.cs" />
-    <Compile Include="Interop\Win32\APPBARDATA.cs" />
-    <Compile Include="Interop\Win32\AppBarEdges.cs" />
-    <Compile Include="Interop\Win32\AppBarMessages.cs" />
-    <Compile Include="Interop\Win32\AppBarStates.cs" />
-    <Compile Include="Interop\Win32\MONITORINFOEX.cs" />
-    <Compile Include="Interop\Win32\NCCALCSIZE_PARAMS.cs" />
-    <Compile Include="Interop\Win32\WindowValidRects.cs" />
-    <Compile Include="Interop\Win32\Shell32.cs" />
-    <Compile Include="Platform\ImmersiveColor.cs" />
-    <Compile Include="Interop\InteropExtensions.cs" />
-    <Compile Include="Interop\MonitorDpiType.cs" />
-    <Compile Include="Interop\PerMonitorDpi.cs" />
-    <Compile Include="Interop\Win32\SHCore.cs" />
-    <Compile Include="Interop\Win32\UxTheme.cs" />
-    <Compile Include="Interop\Win32\WindowCompositionAttributeData.cs" />
-    <Compile Include="Media\ColorHelper.cs" />
-    <Compile Include="Media\HsvColor.cs" />
-    <Compile Include="Media\Luminosity.cs" />
-    <Compile Include="Platform\IWindowsThemeValue.cs" />
-    <Compile Include="Platform\WindowComposition.cs" />
-    <Compile Include="Platform\WindowsThemeConstantValue.cs" />
-    <Compile Include="Platform\WindowsThemeValues.cs" />
-    <Compile Include="Platform\TransparentWindow.cs" />
-    <Compile Include="Platform\WindowsThemeValue.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\AppMode.cs" />
-    <Compile Include="Platform\RawWindow.cs" />
-    <Compile Include="Platform\WindowsTheme.cs" />
-    <Compile Include="Interop\Win32\ClassLongPtrIndex.cs" />
-    <Compile Include="Interop\Win32\WindowClassStyles.cs" />
-    <Compile Include="Interop\Win32\Dwmapi.cs" />
-    <Compile Include="Interop\Win32\DWMWINDOWATTRIBUTE.cs" />
-    <Compile Include="Interop\Win32\WindowLongFlags.cs" />
-    <Compile Include="Interop\Win32\HitTestValues.cs" />
-    <Compile Include="Interop\Win32\MonitorDefaultTo.cs" />
-    <Compile Include="Interop\Win32\NativeExtensions.cs" />
-    <Compile Include="Interop\Win32\PreferredAppMode.cs" />
-    <Compile Include="Interop\Win32\User32.cs" />
-    <Compile Include="Interop\Win32\ShowWindowFlags.cs" />
-    <Compile Include="Interop\Win32\SetWindowPosFlags.cs" />
-    <Compile Include="Interop\Win32\WINDOWPLACEMENT.cs" />
-    <Compile Include="Interop\Win32\WindowsMessages.cs" />
-    <Compile Include="Interop\Win32\WindowStyles.cs" />
-    <Compile Include="Interop\Win32\WindowExStyles.cs" />
-    <Compile Include="Utilities\Disposable.cs" />
-    <None Include="MetroRadiance.Core.nuspec" />
-    <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
