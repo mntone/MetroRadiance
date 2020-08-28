@@ -85,7 +85,7 @@ namespace MetroRadiance.Showcase.UI
 			if (NativeMethods.GetAncestor(hWnd, 2 /* GA_ROOT */) != hWnd) return false;
 
 			// 見えないウィンドウでないか
-			if (Dwmapi.DwmGetCloaked(hWnd)) return false;
+			if (WindowsVersion.Is8OrGreater && Dwmapi.DwmGetCloaked(hWnd)) return false;
 
 			return true;
 		}

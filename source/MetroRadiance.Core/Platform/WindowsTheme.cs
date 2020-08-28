@@ -13,9 +13,9 @@ namespace MetroRadiance.Platform
 	{
 		static WindowsTheme()
 		{
-			var version = Environment.OSVersion.Version;
-			if (version.Major == 10)
+			if (WindowsVersion.Is10)
 			{
+				var version = WindowsVersion.OSVersion;
 				if (version.Build >= 18282)
 				{
 					Theme = new ThemeValue();
@@ -39,8 +39,7 @@ namespace MetroRadiance.Platform
 				Theme = new WindowsThemeConstantValue<Theme>(Platform.Theme.Light);
 				SystemTheme = new WindowsThemeConstantValue<Theme>(Platform.Theme.Light);
 				ColorPrevalence = new WindowsThemeConstantValue<bool>(true);
-				if (version.Major == 6 && version.Minor == 0
-					|| version.Major == 6 && version.Minor == 1)
+				if (WindowsVersion.IsVistaOr7)
 				{
 					Transparency = new TransparencyValueWindowsVistaOr7();
 				}

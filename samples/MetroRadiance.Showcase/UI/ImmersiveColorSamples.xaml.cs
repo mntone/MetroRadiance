@@ -14,6 +14,8 @@ namespace MetroRadiance.Showcase.UI
 		{
 			this.InitializeComponent();
 
+			if (!WindowsVersion.Is8Point1OrGreater) return;
+
 			this.DataContext = typeof(ImmersiveColorNames).GetFields(BindingFlags.Static | BindingFlags.Public)
 				.Select(x => (string)x.GetValue(null))
 				.Select(name =>

@@ -10,16 +10,12 @@ namespace MetroRadiance.UI.Controls
 {
 	public class BlurWindow : WindowCompat
 	{
-		protected internal static bool IsWindows10 { get; }
-
 		static BlurWindow()
 		{
-			IsWindows10 = Environment.OSVersion.Version.Major == 10;
-
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(BlurWindow), new FrameworkPropertyMetadata(typeof(BlurWindow)));
 			ResizeModeProperty.OverrideMetadata(typeof(BlurWindow), new FrameworkPropertyMetadata(ResizeMode.CanMinimize));
 			WindowStyleProperty.OverrideMetadata(typeof(BlurWindow), new FrameworkPropertyMetadata(WindowStyle.None));
-			if (IsWindows10)
+			if (WindowsVersion.Is10)
 			{
 				AllowsTransparencyProperty.OverrideMetadata(typeof(BlurWindow), new FrameworkPropertyMetadata(true));
 			}
@@ -110,11 +106,11 @@ namespace MetroRadiance.UI.Controls
 
 			this._source = PresentationSource.FromVisual(this) as HwndSource;
 			if (this._source == null) return;
-			if (!IsWindows10) this._source.AddHook(this.WndProc);
+			if (!WindowsVersion.Is10) this._source.AddHook(this.WndProc);
 
 			var hWnd = this._source.Handle;
 			var wndStyle = User32.GetWindowLong(hWnd);
-			if (!IsWindows10) wndStyle |= WindowStyles.WS_SIZEFRAME;
+			if (!WindowsVersion.Is10) wndStyle |= WindowStyles.WS_SIZEFRAME;
 			User32.SetWindowLong(hWnd, wndStyle & ~WindowStyles.WS_SYSMENU);
 		}
 
@@ -122,7 +118,7 @@ namespace MetroRadiance.UI.Controls
 		{
 			base.OnClosed(e);
 
-			if (!IsWindows10) this._source?.RemoveHook(this.WndProc);
+			if (!WindowsVersion.Is10) this._source?.RemoveHook(this.WndProc);
 
 			WindowsTheme.HighContrast.Changed -= this.HandleThemeBooleanChanged;
 			WindowsTheme.Transparency.Changed -= this.HandleThemeBooleanChanged;
@@ -207,7 +203,7 @@ namespace MetroRadiance.UI.Controls
 			{
 				this.ToHighContrast();
 			}
-			else if (!IsWindows10)
+			else if (!WindowsVersion.Is10)
 			{
 				this.ToCompatibility();
 			}
@@ -223,7 +219,7 @@ namespace MetroRadiance.UI.Controls
 
 		protected internal void ToHighContrast()
 		{
-			if (IsWindows10) WindowComposition.Disable(this);
+			if (WindowsVersion.Is10) WindowComposition.Disable(this);
 			this.ChangeProperties(
 				ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.ApplicationBackground),
 				ImmersiveColor.GetColorByTypeName(ImmersiveColorNames.SystemText),

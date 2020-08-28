@@ -11,7 +11,7 @@ namespace MetroRadiance.UI.Controls
 
 		static AcrylicBlurWindow()
 		{
-			IsAcrylicBlurEnabled = Environment.OSVersion.Version.Build >= 17004;
+			IsAcrylicBlurEnabled = WindowsVersion.OSVersion.Build >= 17004;
 		}
 
 		protected internal override void HandleThemeChanged()
@@ -20,7 +20,7 @@ namespace MetroRadiance.UI.Controls
 			{
 				this.ToHighContrast();
 			}
-			else if (!IsWindows10)
+			else if (!WindowsVersion.Is10)
 			{
 				this.ToCompatibility();
 			}
