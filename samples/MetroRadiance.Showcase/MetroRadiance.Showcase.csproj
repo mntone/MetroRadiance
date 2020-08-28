@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <TargetFrameworks>net452;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net452;net462;netcoreapp3.1</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <UseWPF>true</UseWPF>
     <RootNamespace>MetroRadiance.Showcase</RootNamespace>
@@ -37,7 +37,7 @@
     <ProjectReference Include="..\..\source\MetroRadiance\MetroRadiance.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='net452'">
+  <ItemGroup Condition="'$(TargetFramework)'=='net452' OR '$(TargetFramework)'=='net462'">
     <ProjectReference Include="..\..\source\MetroRadiance.Chrome.Externals\MetroRadiance.Chrome.Externals.csproj" />
   </ItemGroup>
 

@@ -31,6 +31,12 @@ namespace MetroRadiance.Interop
 			this.Y = y;
 		}
 
+#if !(NET45 || NET451 || NET452 || NET46 || NET461)
+		public Dpi(DpiScale dpiScale)
+			: this((uint)dpiScale.PixelsPerInchX, (uint)dpiScale.PixelsPerInchY)
+		{ }
+#endif
+
 		public Point LogicalToPhysical(Point logical)
 			=> new Point(logical.X * this.ScaleX, logical.Y * this.ScaleY);
 

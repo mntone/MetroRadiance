@@ -275,7 +275,11 @@ namespace MetroRadiance.UI.Controls
 			return (IntPtr)(WindowValidRects.WVR_ALIGNTOP | WindowValidRects.WVR_ALIGNLEFT | WindowValidRects.WVR_VALIDRECTS);
 		}
 
-		protected override void OnDpiChanged(Dpi oldDpi, Dpi newDpi)
-			=> this.UpdateIsCaptionBarHeight();
+		internal protected override void ChangeDpi(IntPtr hWnd, Dpi dpi, RECT rect)
+		{
+			base.ChangeDpi(hWnd, dpi, rect);
+
+			this.UpdateIsCaptionBarHeight();
+		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using MetroRadiance.Interop;
 using MetroRadiance.Interop.Win32;
+using MetroRadiance.Platform;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -10,10 +11,16 @@ namespace MetroRadiance.UI.Controls
 {
 	public class WindowCompat : Window
 	{
+#if NET45 || NET451 || NET452 || NET46 || NET461
+		public static bool HasBuiltInScaling => false;
+#else
+		public static bool HasBuiltInScaling => WindowsVersion.Is10RS1OrGreater;
+#endif
+
 		private HwndSource _source;
 
 		/// <summary>
-		/// WPF が認識しているシステムの DPI (プライマリ モニターの DPI)。
+		/// システムの現在の DPI (プライマリ モニターの DPI)。
 		/// </summary>
 		public Dpi SystemDpi { get; private set; }
 
@@ -42,11 +49,18 @@ namespace MetroRadiance.UI.Controls
 		{
 			base.OnSourceInitialized(e);
 
-			this._source = (HwndSource)PresentationSource.FromVisual(this);
-			if (this._source == null) return;
-			this._source.AddHook(this.WndProc);
+			if (HasBuiltInScaling)
+			{
+				this.SystemDpi = Dpi.FromVisual(this);
+			}
+			else
+			{
+				this._source = (HwndSource)PresentationSource.FromVisual(this);
+				if (this._source == null) return;
+				this._source.AddHook(this.WndProc);
 
-			this.SystemDpi = this.GetSystemDpi() ?? Dpi.Default;
+				this.SystemDpi = Dpi.FromPresentationSource(this._source);
+			}
 			this.WindowDpi = this.SystemDpi;
 		}
 
@@ -76,7 +90,7 @@ namespace MetroRadiance.UI.Controls
 			return IntPtr.Zero;
 		}
 
-		private void ChangeDpi(IntPtr hWnd, Dpi dpi, RECT rect)
+		internal protected virtual void ChangeDpi(IntPtr hWnd, Dpi dpi, RECT rect)
 		{
 			this.DpiScaleTransform = dpi == this.SystemDpi
 				? Transform.Identity
@@ -95,6 +109,17 @@ namespace MetroRadiance.UI.Controls
 			this.WindowDpi = dpi;
 			this.OnDpiChanged(oldDpi, dpi);
 		}
+
+#if !(NET45 || NET451 || NET452 || NET46 || NET461)
+		protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi)
+		{
+			base.OnDpiChanged(oldDpi, newDpi);
+
+			var newDpi2 = new Dpi(newDpi);
+			this.WindowDpi = newDpi2;
+			this.OnDpiChanged(new Dpi(oldDpi), newDpi2);
+		}
+#endif
 
 		protected virtual void OnDpiChanged(Dpi oldDpi, Dpi newDpi)
 		{ }
