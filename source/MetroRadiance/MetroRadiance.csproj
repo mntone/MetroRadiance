@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net45' OR '$(TargetFramework)'=='net462'">
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
 

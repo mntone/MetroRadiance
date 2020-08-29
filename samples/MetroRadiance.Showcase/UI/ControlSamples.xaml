@@ -18,6 +18,47 @@
 					   HorizontalAlignment="Center"
 					   Margin="0,0,0,8" />
 
+			<Menu>
+				<MenuItem Header="_File">
+					<MenuItem Header="_New">
+						<MenuItem Header="_Solution"
+								  InputGestureText="Ctrl+Shift+N"
+								  IsEnabled="{Binding ElementName=EnabledCheck, Path=IsChecked}">
+							<MenuItem.Icon>
+								<Ellipse Fill="{DynamicResource ForegroundBrushKey}" />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header="_Project"
+								  InputGestureText="Ctrl+N"
+								  IsEnabled="{Binding ElementName=EnabledCheck, Path=IsChecked}">
+							<MenuItem.Icon>
+								<Rectangle Fill="{DynamicResource ForegroundBrushKey}" />
+							</MenuItem.Icon>
+						</MenuItem>
+					</MenuItem>
+					<Separator />
+					<MenuItem Header="_Exit"
+							  InputGestureText="Alt+F4" />
+				</MenuItem>
+				<MenuItem Header="_Edit"
+						  IsEnabled="{Binding ElementName=EnabledCheck, Path=IsChecked}">
+					<MenuItem Header="_Undo"
+							  InputGestureText="Ctrl+Z" />
+					<MenuItem Header="_Redo"
+							  InputGestureText="Ctrl+Y" />
+					<Separator />
+					<MenuItem Header="Cu_t"
+							  InputGestureText="Ctrl+X" />
+					<MenuItem Header="_Copy"
+							  InputGestureText="Ctrl+C" />
+					<MenuItem Header="_Paste"
+							  InputGestureText="Ctrl+V" />
+				</MenuItem>
+				<MenuItem Header="_Help">
+					<MenuItem Header="_About" />
+				</MenuItem>
+			</Menu>
+
 			<CheckBox x:Name="EnabledCheck"
 					  Content="IsEnabled"
 					  IsChecked="True"
