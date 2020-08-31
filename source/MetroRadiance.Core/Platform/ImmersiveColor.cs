@@ -16,7 +16,7 @@ namespace MetroRadiance.Platform
 			var colorSet = UxTheme.GetImmersiveUserColorSetPreference(false, false);
 			var colorType = UxTheme.GetImmersiveColorTypeFromName(name);
 			var rawColor = UxTheme.GetImmersiveColorFromColorSetEx(colorSet, colorType, false, 0);
-			
+
 			var a = (byte)((0xFF000000 & rawColor) >> 24);
 			var b = (byte)((0x00FF0000 & rawColor) >> 16);
 			var g = (byte)((0x0000FF00 & rawColor) >> 8);

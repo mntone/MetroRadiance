@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using MetroRadiance.Utilities;
@@ -18,9 +16,9 @@ namespace MetroRadiance.UI.Controls
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(CaptionButton), new FrameworkPropertyMetadata(typeof(CaptionButton)));
 		}
 
-		private Window owner;
+		private Window _owner;
 
-		#region WindowAction 依存関係プロパティ
+		#region WindowAction dependency property
 
 		/// <summary>
 		/// ボタンに割り当てるウィンドウ操作を取得または設定します。
@@ -31,11 +29,11 @@ namespace MetroRadiance.UI.Controls
 			set { this.SetValue(WindowActionProperty, value); }
 		}
 		public static readonly DependencyProperty WindowActionProperty =
-			DependencyProperty.Register("WindowAction", typeof(WindowAction), typeof(CaptionButton), new UIPropertyMetadata(WindowAction.None));
+			DependencyProperty.Register(nameof(WindowAction), typeof(WindowAction), typeof(CaptionButton), new UIPropertyMetadata(WindowAction.None));
 
 		#endregion
-		
-		#region Mode 依存関係プロパティ
+
+		#region Mode dependency property
 
 		public CaptionButtonMode Mode
 		{
@@ -43,11 +41,11 @@ namespace MetroRadiance.UI.Controls
 			set { this.SetValue(ModeProperty, value); }
 		}
 		public static readonly DependencyProperty ModeProperty =
-			DependencyProperty.Register("Mode", typeof(CaptionButtonMode), typeof(CaptionButton), new UIPropertyMetadata(CaptionButtonMode.Normal));	
+			DependencyProperty.Register(nameof(Mode), typeof(CaptionButtonMode), typeof(CaptionButton), new UIPropertyMetadata(CaptionButtonMode.Normal));
 
 		#endregion
 
-		#region IsChecked 依存関係プロパティ
+		#region IsChecked dependency property
 
 		public bool IsChecked
 		{
@@ -55,7 +53,7 @@ namespace MetroRadiance.UI.Controls
 			set { this.SetValue(IsCheckedProperty, value); }
 		}
 		public static readonly DependencyProperty IsCheckedProperty =
-			DependencyProperty.Register("IsChecked", typeof(bool), typeof(CaptionButton), new UIPropertyMetadata(false));
+			DependencyProperty.Register(nameof(IsChecked), typeof(bool), typeof(CaptionButton), new UIPropertyMetadata(false));
 
 		#endregion
 
@@ -63,10 +61,10 @@ namespace MetroRadiance.UI.Controls
 		{
 			base.OnInitialized(e);
 
-			this.owner = Window.GetWindow(this);
-			if (this.owner != null)
+			this._owner = Window.GetWindow(this);
+			if (this._owner != null)
 			{
-				this.owner.StateChanged += (sender, args) => this.ChangeVisibility();
+				this._owner.StateChanged += (sender, args) => this.ChangeVisibility();
 				this.ChangeVisibility();
 			}
 		}
@@ -85,13 +83,13 @@ namespace MetroRadiance.UI.Controls
 			switch (this.WindowAction)
 			{
 				case WindowAction.Maximize:
-					this.Visibility = this.owner.WindowState != WindowState.Maximized ? Visibility.Visible : Visibility.Collapsed;
+					this.Visibility = this._owner.WindowState != WindowState.Maximized ? Visibility.Visible : Visibility.Collapsed;
 					break;
 				case WindowAction.Minimize:
-					this.Visibility = this.owner.WindowState != WindowState.Minimized ? Visibility.Visible : Visibility.Collapsed;
+					this.Visibility = this._owner.WindowState != WindowState.Minimized ? Visibility.Visible : Visibility.Collapsed;
 					break;
 				case WindowAction.Normalize:
-					this.Visibility = this.owner.WindowState != WindowState.Normal ? Visibility.Visible : Visibility.Collapsed;
+					this.Visibility = this._owner.WindowState != WindowState.Normal ? Visibility.Visible : Visibility.Collapsed;
 					break;
 			}
 		}

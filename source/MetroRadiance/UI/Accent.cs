@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media;
@@ -109,6 +108,7 @@ namespace MetroRadiance.UI
 		/// <summary>
 		/// シリアル化インフラストラクチャをサポートします。コードから直接使用するためのものではありません。
 		/// </summary>
+#pragma warning disable IDE1006
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		// ReSharper disable once InconsistentNaming
 		public SpecifiedColor? __Specified
@@ -116,10 +116,12 @@ namespace MetroRadiance.UI
 			get { return this.Specified; }
 			set { this.Specified = value; }
 		}
+#pragma warning restore IDE1006
 
 		/// <summary>
 		/// シリアル化インフラストラクチャをサポートします。コードから直接使用するためのものではありません。
 		/// </summary>
+#pragma warning disable IDE1006
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		// ReSharper disable once InconsistentNaming
 		public Color? __Color
@@ -127,5 +129,6 @@ namespace MetroRadiance.UI
 			get { return this.Color; }
 			set { this.Color = value; }
 		}
+#pragma warning restore IDE1006
 	}
 }

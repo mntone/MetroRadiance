@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 // ReSharper disable InconsistentNaming
 
+#pragma warning disable IDE1006
 namespace MetroRadiance.Interop.Win32
 {
 	[StructLayout(LayoutKind.Sequential)]

@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace MetroRadiance.UI.Controls
 {
 	/// <summary>
-	/// 入力された値が有効な <see cref="Int32"/> 値かどうかを検証します。
+	/// 入力された値が有効な <see cref="int"/> 値かどうかを検証します。
 	/// </summary>
 	public class Int32Rule : ValidationRule
 	{

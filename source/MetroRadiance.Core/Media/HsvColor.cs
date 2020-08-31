@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace MetroRadiance.Media
@@ -189,7 +187,7 @@ namespace MetroRadiance.Media
 			}
 			else
 			{
-				s = ((max - min) / (double)max);
+				s = (max - min) / (double)max;
 			}
 
 			var v = max / 255.0;

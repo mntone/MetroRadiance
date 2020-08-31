@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -25,11 +24,11 @@ namespace MetroRadiance.Interop.Win32
 		DrawTopBorder = 0x40,
 		DrawRightBorder = 0x80,
 		DrawBottomBorder = 0x100,
-		DrawTopLeftBorder = (DrawLeftBorder | DrawTopBorder),
-		DrawTopRightBorder = (DrawTopBorder | DrawRightBorder),
-		DrawBottomLeftBorder = (DrawLeftBorder | DrawBottomBorder),
-		DrawBottomRightBorder = (DrawRightBorder | DrawBottomBorder),
-		DrawAllBorders = (DrawLeftBorder | DrawTopBorder | DrawRightBorder | DrawBottomBorder)
+		DrawTopLeftBorder = DrawLeftBorder | DrawTopBorder,
+		DrawTopRightBorder = DrawTopBorder | DrawRightBorder,
+		DrawBottomLeftBorder = DrawLeftBorder | DrawBottomBorder,
+		DrawBottomRightBorder = DrawRightBorder | DrawBottomBorder,
+		DrawAllBorders = DrawLeftBorder | DrawTopBorder | DrawRightBorder | DrawBottomBorder
 	}
 
 	[StructLayout(LayoutKind.Sequential)]

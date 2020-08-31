@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,7 +16,7 @@ namespace MetroRadiance.UI.Controls
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(CaptionIcon), new FrameworkPropertyMetadata(typeof(CaptionIcon)));
 		}
 
-		private bool isSystemMenuOpened;
+		private bool _isSystemMenuOpened;
 
 
 		protected override void OnInitialized(EventArgs e)
@@ -49,7 +47,7 @@ namespace MetroRadiance.UI.Controls
 		{
 			if (msg == (int)WindowsMessages.WM_NCLBUTTONDOWN)
 			{
-				this.isSystemMenuOpened = false;
+				this._isSystemMenuOpened = false;
 			}
 
 			return IntPtr.Zero;
@@ -62,9 +60,9 @@ namespace MetroRadiance.UI.Controls
 				var window = Window.GetWindow(this);
 				if (e.ClickCount == 1)
 				{
-					if (!this.isSystemMenuOpened)
+					if (!this._isSystemMenuOpened)
 					{
-						this.isSystemMenuOpened = true;
+						this._isSystemMenuOpened = true;
 
 						var point = this.PointToScreen(new Point(0, this.ActualHeight));
 						var dpi = Dpi.FromVisual(window);
@@ -72,7 +70,7 @@ namespace MetroRadiance.UI.Controls
 					}
 					else
 					{
-						this.isSystemMenuOpened = false;
+						this._isSystemMenuOpened = false;
 					}
 				}
 				else if (e.ClickCount == 2)
@@ -96,7 +94,7 @@ namespace MetroRadiance.UI.Controls
 
 		protected override void OnMouseLeave(MouseEventArgs e)
 		{
-			this.isSystemMenuOpened = false;
+			this._isSystemMenuOpened = false;
 			base.OnMouseLeave(e);
 		}
 	}

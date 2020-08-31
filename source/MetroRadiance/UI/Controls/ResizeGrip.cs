@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Interop;
@@ -19,8 +17,8 @@ namespace MetroRadiance.UI.Controls
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(ResizeGrip), new FrameworkPropertyMetadata(typeof(ResizeGrip)));
 		}
 
-		private bool canResize;
-		private bool isInitialized;
+		private bool _canResize;
+		private bool _isInitialized;
 
 		public ResizeGrip()
 		{
@@ -29,7 +27,7 @@ namespace MetroRadiance.UI.Controls
 
 		private void Initialize(object sender, RoutedEventArgs args)
 		{
-			if (this.isInitialized) return;
+			if (this._isInitialized) return;
 
 			var window = Window.GetWindow(this);
 			if (window == null) return;
@@ -37,15 +35,15 @@ namespace MetroRadiance.UI.Controls
 			var source = (HwndSource)PresentationSource.FromVisual(window);
 			if (source != null) source.AddHook(this.WndProc);
 
-			window.StateChanged += (_, __) => this.canResize = window.WindowState == WindowState.Normal;
-			window.ContentRendered += (_, __) => this.canResize = window.WindowState == WindowState.Normal;
+			window.StateChanged += (_, __) => this._canResize = window.WindowState == WindowState.Normal;
+			window.ContentRendered += (_, __) => this._canResize = window.WindowState == WindowState.Normal;
 
-			this.isInitialized = true;
+			this._isInitialized = true;
 		}
 
 		private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
-			if (msg == (int)WindowsMessages.WM_NCHITTEST && this.canResize)
+			if (msg == (int)WindowsMessages.WM_NCHITTEST && this._canResize)
 			{
 				var ptScreen = lParam.ToPoint();
 				var ptClient = this.PointFromScreen(ptScreen);

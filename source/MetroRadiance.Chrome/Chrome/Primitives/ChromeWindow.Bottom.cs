@@ -30,7 +30,7 @@ namespace MetroRadiance.Chrome.Primitives
 			this._leftScaledOffset = this.Offset.Left.DpiRoundX(this.CurrentDpi);
 			this._rightScaledOffset = this.Offset.Right.DpiRoundX(this.CurrentDpi);
 		}
-		
+
 		protected override int GetLeft(RECT owner)
 		{
 			return owner.Left - this._leftScaledOffset;

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,17 +9,19 @@ namespace MetroRadiance.UI.Controls
 	[TemplatePart(Name = PART_CountHost, Type = typeof(TextBlock))]
 	public class Badge : Control
 	{
+#pragma warning disable IDE1006
 		private const string PART_CountHost = "PART_CountHost";
+#pragma warning restore IDE1006
 
 		static Badge()
 		{
 			DefaultStyleKeyProperty.OverrideMetadata(typeof(Badge), new FrameworkPropertyMetadata(typeof(Badge)));
 		}
 
-		private TextBlock block;
-		private double initialSize;
+		private TextBlock _block;
+		private double _initialSize;
 
-		#region Count 依存関係プロパティ
+		#region Count dependency property
 
 		public int? Count
 		{
@@ -48,10 +48,10 @@ namespace MetroRadiance.UI.Controls
 		{
 			base.OnApplyTemplate();
 
-			this.block = this.GetTemplateChild(PART_CountHost) as TextBlock;
-			if (this.block != null)
+			this._block = this.GetTemplateChild(PART_CountHost) as TextBlock;
+			if (this._block != null)
 			{
-				this.initialSize = this.block.FontSize;
+				this._initialSize = this._block.FontSize;
 				this.SetCount(this.Count);
 			}
 		}
@@ -60,10 +60,10 @@ namespace MetroRadiance.UI.Controls
 		{
 			if (count.HasValue)
 			{
-				if (this.block != null)
+				if (this._block != null)
 				{
-					this.block.Text = count.Value.ToString(CultureInfo.InvariantCulture);
-					this.block.FontSize = count.Value >= 10 ? this.initialSize - 1 : this.initialSize;
+					this._block.Text = count.Value.ToString(CultureInfo.InvariantCulture);
+					this._block.FontSize = count.Value >= 10 ? this._initialSize - 1 : this._initialSize;
 				}
 				this.Visibility = Visibility.Visible;
 			}

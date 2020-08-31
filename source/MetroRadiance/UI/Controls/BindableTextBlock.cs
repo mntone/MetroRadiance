@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -11,7 +10,7 @@ namespace MetroRadiance.UI.Controls
 {
 	public class BindableTextBlock : TextBlock
 	{
-		#region TextTemplates 依存関係プロパティ
+		#region TextTemplates dependency property
 
 		public DataTemplateCollection TextTemplates
 		{
@@ -19,11 +18,11 @@ namespace MetroRadiance.UI.Controls
 			set { this.SetValue(TextTemplatesProperty, value); }
 		}
 		public static readonly DependencyProperty TextTemplatesProperty =
-			DependencyProperty.Register("TextTemplates", typeof(DataTemplateCollection), typeof(BindableTextBlock), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnNeedUpdate));
+			DependencyProperty.Register(nameof(TextTemplates), typeof(DataTemplateCollection), typeof(BindableTextBlock), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnNeedUpdate));
 
 		#endregion
 
-		#region TextSource 依存関係プロパティ
+		#region TextSource dependency property
 
 		public IEnumerable<object> TextSource
 		{
@@ -31,7 +30,7 @@ namespace MetroRadiance.UI.Controls
 			set { this.SetValue(TextSourceProperty, value); }
 		}
 		public static readonly DependencyProperty TextSourceProperty =
-			DependencyProperty.Register("TextSource", typeof(IEnumerable<object>), typeof(BindableTextBlock), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, OnNeedUpdate));
+			DependencyProperty.Register(nameof(TextSource), typeof(IEnumerable<object>), typeof(BindableTextBlock), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None, OnNeedUpdate));
 
 		private static void OnNeedUpdate(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{

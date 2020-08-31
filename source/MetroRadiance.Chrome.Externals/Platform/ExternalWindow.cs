@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows;
 using ChromeHookCLR;
 using MetroRadiance.Chrome;
-using MetroRadiance.Interop;
 using MetroRadiance.Interop.Win32;
 
 namespace MetroRadiance.Platform
@@ -66,7 +62,7 @@ namespace MetroRadiance.Platform
 			this._external.Activated += this.ExternalOnActivated;
 			this._external.Deactivated += this.ExternalOnDeactivated;
 			this._external.Closed += this.ExternalOnClosed;
-			
+
 			this.IsActive = User32.GetForegroundWindow() == this.Handle;
 			this.WindowState = WindowState.Normal;
 			if (User32.IsIconic(hWnd)) this.WindowState = WindowState.Minimized;

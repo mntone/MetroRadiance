@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using MetroRadiance.UI.Controls;
 using MetroRadiance.Utilities;
@@ -11,7 +9,7 @@ namespace MetroRadiance.UI.Interactivity
 {
 	internal class DirectWindowAction : TriggerAction<FrameworkElement>
 	{
-		#region WindowAction 依存関係プロパティ
+		#region WindowAction dependency property
 
 		public WindowAction WindowAction
 		{
@@ -20,7 +18,7 @@ namespace MetroRadiance.UI.Interactivity
 		}
 
 		public static readonly DependencyProperty WindowActionProperty =
-			DependencyProperty.Register("WindowAction", typeof (WindowAction), typeof (DirectWindowAction), new UIPropertyMetadata(WindowAction.Active));
+			DependencyProperty.Register(nameof(WindowAction), typeof(WindowAction), typeof(DirectWindowAction), new UIPropertyMetadata(WindowAction.Active));
 
 		#endregion
 

@@ -5,7 +5,7 @@ using MetroRadiance.Interop.Win32;
 namespace MetroRadiance.Platform
 {
 	public static class AppMode
-	{	
+	{
 		public static bool SetAppMode(PreferredAppMode appMode)
 		{
 			var build = Environment.OSVersion.Version.Build;

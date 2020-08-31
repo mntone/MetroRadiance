@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using MetroRadiance.Interop.Win32;
@@ -11,7 +9,7 @@ namespace MetroRadiance.Chrome.Primitives
 {
 	internal class WindowWrapper : IChromeOwner
 	{
-		#region WindowWrapper 添付プロパティ
+		#region WindowWrapper attached property
 
 		public static readonly DependencyProperty WindowWrapperProperty =
 			DependencyProperty.RegisterAttached("WindowWrapper", typeof(WindowWrapper), typeof(Window), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.None));
@@ -39,7 +37,7 @@ namespace MetroRadiance.Chrome.Primitives
 
 			return wrapper;
 		}
-		
+
 
 		public Window Window { get; }
 		public IntPtr Handle { get; private set; }

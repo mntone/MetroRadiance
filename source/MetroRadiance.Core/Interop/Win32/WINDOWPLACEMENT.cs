@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows;
 
 // ReSharper disable InconsistentNaming
 
 namespace MetroRadiance.Interop.Win32
 {
+#pragma warning disable IDE1006
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential)]
 	public struct WINDOWPLACEMENT
@@ -20,6 +19,7 @@ namespace MetroRadiance.Interop.Win32
 		public POINT maxPosition;
 		public RECT normalPosition;
 	}
+#pragma warning restore IDE1006
 
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential)]

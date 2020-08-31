@@ -21,7 +21,7 @@ namespace MetroRadiance.Interop
 		/// <para>DPI that ensures rendering at a compliant angular resolution on the screen, without incorporating accessibility overrides.</para>
 		/// </summary>
 		AngularDpi = 1,
-		
+
 		/// <summary>
 		/// MDT_Raw_DPI
 		/// <para>Linear DPI of the screen as measures on the screen itself.</para>

@@ -31,16 +31,16 @@ namespace MetroRadiance.UI
 
 		#endregion
 
-		private static readonly UriTemplateAlias themeTemplate = new UriTemplateAlias(@"Themes/{theme}.xaml");
-		private static readonly UriTemplateAlias accentTemplate = new UriTemplateAlias(@"Themes/Accents/{accent}.xaml");
-		private static readonly Uri templateBaseUri = new Uri(@"pack://application:,,,/MetroRadiance;component/");
+		private static readonly UriTemplateAlias _themeTemplate = new UriTemplateAlias(@"Themes/{theme}.xaml");
+		private static readonly UriTemplateAlias _accentTemplate = new UriTemplateAlias(@"Themes/Accents/{accent}.xaml");
+		private static readonly Uri _templateBaseUri = new Uri(@"pack://application:,,,/MetroRadiance;component/");
 
-		private Dispatcher dispatcher;
-		private IDisposable windowsAccentListener;
-		private IDisposable windowsThemeListener;
+		private Dispatcher _dispatcher;
+		private IDisposable _windowsAccentListener;
+		private IDisposable _windowsThemeListener;
 
-		private readonly List<ResourceDictionary> themeResources = new List<ResourceDictionary>();
-		private readonly List<ResourceDictionary> accentResources = new List<ResourceDictionary>();
+		private readonly List<ResourceDictionary> _themeResources = new List<ResourceDictionary>();
+		private readonly List<ResourceDictionary> _accentResources = new List<ResourceDictionary>();
 
 		#region Theme 変更通知プロパティ
 
@@ -100,7 +100,7 @@ namespace MetroRadiance.UI
 		/// <returns><paramref name="app"/> をリソースの書き換え対象から外すときに使用する <see cref="IDisposable"/> オブジェクト。</returns>
 		public IDisposable Register(Application app, Theme theme, Accent accent)
 		{
-			this.dispatcher = app.Dispatcher;
+			this._dispatcher = app.Dispatcher;
 
 			var disposable = this.Register(app.Resources, theme, accent);
 
@@ -140,7 +140,7 @@ namespace MetroRadiance.UI
 					targetThemeDic[key] = themeDic[key];
 				}
 			}
-			this.themeResources.Add(targetThemeDic);
+			this._themeResources.Add(targetThemeDic);
 
 			var accentDic = GetAccentResource(accent);
 			var targetAccentDic = allDictionaries.FirstOrDefault(x => CheckAccentResourceUri(x.Source));
@@ -156,13 +156,13 @@ namespace MetroRadiance.UI
 					targetAccentDic[key] = accentDic[key];
 				}
 			}
-			this.accentResources.Add(targetAccentDic);
+			this._accentResources.Add(targetAccentDic);
 
 			// Unregister したいときは戻り値の IDisposable を Dispose() してほしい
 			return Disposable.Create(() =>
 			{
-				this.themeResources.Remove(targetThemeDic);
-				this.accentResources.Remove(targetAccentDic);
+				this._themeResources.Remove(targetThemeDic);
+				this._accentResources.Remove(targetAccentDic);
 			});
 		}
 
@@ -195,7 +195,7 @@ namespace MetroRadiance.UI
 
 			foreach (var key in dic.Keys.OfType<string>())
 			{
-				foreach (var resource in this.themeResources.Where(x => x.Contains(key)))
+				foreach (var resource in this._themeResources.Where(x => x.Contains(key)))
 				{
 					resource[key] = dic[key];
 				}
@@ -242,7 +242,7 @@ namespace MetroRadiance.UI
 		{
 			foreach (var key in dic.Keys.OfType<string>())
 			{
-				foreach (var resource in this.accentResources.Where(x => x.Contains(key)))
+				foreach (var resource in this._accentResources.Where(x => x.Contains(key)))
 				{
 					resource[key] = dic[key];
 				}
@@ -305,17 +305,17 @@ namespace MetroRadiance.UI
 		{
 			if (accent == Accent.Windows)
 			{
-				if (this.windowsAccentListener == null)
+				if (this._windowsAccentListener == null)
 				{
 					// アクセントが Windows 依存で、リスナーが未登録だったら購読する
-					this.windowsAccentListener = WindowsTheme.Accent.RegisterListener(x => this.ChangeAccentCore(x));
+					this._windowsAccentListener = WindowsTheme.Accent.RegisterListener(x => this.ChangeAccentCore(x));
 				}
 			}
-			else if (this.windowsAccentListener != null)
+			else if (this._windowsAccentListener != null)
 			{
 				// アクセントが Windows 依存でないのにリスナーが登録されてたら解除する
-				this.windowsAccentListener.Dispose();
-				this.windowsAccentListener = null;
+				this._windowsAccentListener.Dispose();
+				this._windowsAccentListener = null;
 			}
 		}
 
@@ -323,15 +323,15 @@ namespace MetroRadiance.UI
 		{
 			if (theme == Theme.Windows)
 			{
-				if (this.windowsThemeListener == null)
+				if (this._windowsThemeListener == null)
 				{
-					this.windowsThemeListener = WindowsTheme.Theme.RegisterListener(x => this.ChangeThemeCore(x));
+					this._windowsThemeListener = WindowsTheme.Theme.RegisterListener(x => this.ChangeThemeCore(x));
 				}
 			}
-			else if (this.windowsThemeListener != null)
+			else if (this._windowsThemeListener != null)
 			{
-				this.windowsThemeListener.Dispose();
-				this.windowsThemeListener = null;
+				this._windowsThemeListener.Dispose();
+				this._windowsThemeListener = null;
 			}
 		}
 
@@ -344,10 +344,10 @@ namespace MetroRadiance.UI
 #if !NETFRAMEWORK
 			if (!uri.IsAbsoluteUri)
 			{
-				uri = new Uri(templateBaseUri, uri);
+				uri = new Uri(_templateBaseUri, uri);
 			}
 #endif
-			return themeTemplate.Match(templateBaseUri, uri) != null;
+			return _themeTemplate.Match(_templateBaseUri, uri) != null;
 		}
 
 		/// <summary>
@@ -359,10 +359,10 @@ namespace MetroRadiance.UI
 #if !NETFRAMEWORK
 			if (!uri.IsAbsoluteUri)
 			{
-				uri = new Uri(templateBaseUri, uri);
+				uri = new Uri(_templateBaseUri, uri);
 			}
 #endif
-			return accentTemplate.Match(templateBaseUri, uri) != null;
+			return _accentTemplate.Match(_templateBaseUri, uri) != null;
 		}
 
 		private static Uri CreateThemeResourceUri(Theme.SpecifiedColor theme)
@@ -371,7 +371,7 @@ namespace MetroRadiance.UI
 			{
 				{ "theme", theme.ToString() },
 			};
-			return themeTemplate.BindByName(templateBaseUri, param);
+			return _themeTemplate.BindByName(_templateBaseUri, param);
 		}
 
 		private static Uri CreateAccentResourceUri(Accent.SpecifiedColor accent)
@@ -380,7 +380,7 @@ namespace MetroRadiance.UI
 			{
 				{ "accent", accent.ToString() },
 			};
-			return accentTemplate.BindByName(templateBaseUri, param);
+			return _accentTemplate.BindByName(_templateBaseUri, param);
 		}
 
 		private static IEnumerable<ResourceDictionary> EnumerateDictionaries(ResourceDictionary dictionary)
@@ -403,7 +403,7 @@ namespace MetroRadiance.UI
 
 		private void InvokeOnUIDispatcher(Action action, DispatcherPriority priority = DispatcherPriority.Normal)
 		{
-			(this.dispatcher ?? Application.Current.Dispatcher).BeginInvoke(action, priority);
+			(this._dispatcher ?? Application.Current.Dispatcher).BeginInvoke(action, priority);
 		}
 
 		#region INotifyPropertyChanged 
@@ -416,7 +416,7 @@ namespace MetroRadiance.UI
 		}
 
 		#endregion
-		
+
 
 		[Obsolete("Register メソッドを使用してください。")]
 		[EditorBrowsable(EditorBrowsableState.Never)]

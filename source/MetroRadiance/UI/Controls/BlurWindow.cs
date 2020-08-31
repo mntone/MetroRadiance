@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
-using MetroRadiance.Interop;
 using MetroRadiance.Interop.Win32;
 using MetroRadiance.Platform;
 
@@ -13,7 +10,7 @@ namespace MetroRadiance.UI.Controls
 {
 	public class BlurWindow : Window
 	{
-		internal protected static bool IsWindows10 { get; }
+		protected internal static bool IsWindows10 { get; }
 
 		static BlurWindow()
 		{
@@ -30,7 +27,7 @@ namespace MetroRadiance.UI.Controls
 
 		private HwndSource _source;
 
-		#region ThemeMode 依存関係プロパティ
+		#region ThemeMode dependency property
 
 		public BlurWindowThemeMode ThemeMode
 		{
@@ -38,7 +35,7 @@ namespace MetroRadiance.UI.Controls
 			set { this.SetValue(ThemeModeProperty, value); }
 		}
 		public static readonly DependencyProperty ThemeModeProperty =
-			DependencyProperty.Register("ThemeMode", typeof(BlurWindowThemeMode), typeof(BlurWindow), new UIPropertyMetadata(BlurWindowThemeMode.Default, ThemeModeChangedCallback));
+			DependencyProperty.Register(nameof(ThemeMode), typeof(BlurWindowThemeMode), typeof(BlurWindow), new UIPropertyMetadata(BlurWindowThemeMode.Default, ThemeModeChangedCallback));
 
 		private static void ThemeModeChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
@@ -55,7 +52,7 @@ namespace MetroRadiance.UI.Controls
 
 		#endregion
 
-		#region BlurOpacity 依存関係プロパティ
+		#region BlurOpacity dependency property
 
 		public double BlurOpacity
 		{
@@ -63,7 +60,7 @@ namespace MetroRadiance.UI.Controls
 			set { this.SetValue(BlurOpacityProperty, value); }
 		}
 		public static readonly DependencyProperty BlurOpacityProperty =
-			DependencyProperty.Register("BlurOpacity", typeof(double), typeof(BlurWindow), new UIPropertyMetadata(0.8, BlurOpacityChangedCallback));
+			DependencyProperty.Register(nameof(BlurOpacity), typeof(double), typeof(BlurWindow), new UIPropertyMetadata(0.8, BlurOpacityChangedCallback));
 
 		private static void BlurOpacityChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
@@ -78,7 +75,7 @@ namespace MetroRadiance.UI.Controls
 
 		#endregion
 
-		#region DrawBorders 依存関係プロパティ
+		#region DrawBorders dependency property
 
 		public AccentFlags BordersFlag
 		{
@@ -86,7 +83,7 @@ namespace MetroRadiance.UI.Controls
 			set { this.SetValue(BordersFlagProperty, value); }
 		}
 		public static readonly DependencyProperty BordersFlagProperty =
-			DependencyProperty.Register("BordersFlag", typeof(AccentFlags), typeof(BlurWindow), new UIPropertyMetadata(AccentFlags.DrawAllBorders, BordersFlagChangedCallback));
+			DependencyProperty.Register(nameof(BordersFlag), typeof(AccentFlags), typeof(BlurWindow), new UIPropertyMetadata(AccentFlags.DrawAllBorders, BordersFlagChangedCallback));
 
 		private static void BordersFlagChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
@@ -107,7 +104,7 @@ namespace MetroRadiance.UI.Controls
 
 			WindowsTheme.HighContrast.Changed += this.HandleThemeBooleanChanged;
 			WindowsTheme.Transparency.Changed += this.HandleThemeBooleanChanged;
-			AddThemeCallback(this.ThemeMode);
+			this.AddThemeCallback(this.ThemeMode);
 
 			this.HandleThemeChanged();
 
@@ -129,7 +126,7 @@ namespace MetroRadiance.UI.Controls
 
 			WindowsTheme.HighContrast.Changed -= this.HandleThemeBooleanChanged;
 			WindowsTheme.Transparency.Changed -= this.HandleThemeBooleanChanged;
-			RemoveThemeCallback(this.ThemeMode);
+			this.RemoveThemeCallback(this.ThemeMode);
 		}
 
 		private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -150,7 +147,7 @@ namespace MetroRadiance.UI.Controls
 				case BlurWindowThemeMode.Default:
 					WindowsTheme.Theme.Changed += this.HandleThemeValueChanged;
 					break;
-					
+
 				case BlurWindowThemeMode.Accent:
 					WindowsTheme.Accent.Changed += this.HandleThemeColorChanged;
 					break;
@@ -176,7 +173,7 @@ namespace MetroRadiance.UI.Controls
 				case BlurWindowThemeMode.Default:
 					WindowsTheme.Theme.Changed -= this.HandleThemeValueChanged;
 					break;
-					
+
 				case BlurWindowThemeMode.Accent:
 					WindowsTheme.Accent.Changed -= this.HandleThemeColorChanged;
 					break;
@@ -204,7 +201,7 @@ namespace MetroRadiance.UI.Controls
 		private void HandleThemeValueChanged(object sender, Platform.Theme value)
 			=> this.HandleThemeChanged();
 
-		internal protected virtual void HandleThemeChanged()
+		protected internal virtual void HandleThemeChanged()
 		{
 			if (WindowsTheme.HighContrast.Current)
 			{
@@ -224,7 +221,7 @@ namespace MetroRadiance.UI.Controls
 			}
 		}
 
-		internal protected void ToHighContrast()
+		protected internal void ToHighContrast()
 		{
 			if (IsWindows10) WindowComposition.Disable(this);
 			this.ChangeProperties(
@@ -234,7 +231,7 @@ namespace MetroRadiance.UI.Controls
 				this.GetBordersFlagAsThickness(2));
 		}
 
-		internal protected void ToDefault()
+		protected internal void ToDefault()
 		{
 			Color background, foreground;
 			this.GetColors(out background, out foreground);
@@ -243,7 +240,7 @@ namespace MetroRadiance.UI.Controls
 			this.ChangeProperties(background, foreground, SystemColors.WindowFrameColor, this.GetBordersFlagAsThickness(1));
 		}
 
-		internal protected void ToBlur()
+		protected internal void ToBlur()
 		{
 			Color background, foreground;
 			this.GetColors(out background, out foreground);
@@ -253,7 +250,7 @@ namespace MetroRadiance.UI.Controls
 			this.ChangeProperties(background, foreground, Colors.Transparent, new Thickness());
 		}
 
-		internal protected void GetColors(out Color background, out Color foreground)
+		protected internal void GetColors(out Color background, out Color foreground)
 		{
 			var colorPrevalence = WindowsTheme.ColorPrevalence.Current;
 			switch (this.ThemeMode)
@@ -306,7 +303,7 @@ namespace MetroRadiance.UI.Controls
 			}
 		}
 
-		internal protected void ToCompatibility()
+		protected internal void ToCompatibility()
 		{
 			Color background, foreground, border;
 			this.GetColorsCompatibility(out background, out foreground, out border);
@@ -314,7 +311,7 @@ namespace MetroRadiance.UI.Controls
 			this.ChangeProperties(background, foreground, border, new Thickness());
 		}
 
-		internal protected void GetColorsCompatibility(out Color background, out Color foreground, out Color border)
+		protected internal void GetColorsCompatibility(out Color background, out Color foreground, out Color border)
 		{
 			switch (this.ThemeMode)
 			{
@@ -323,7 +320,7 @@ namespace MetroRadiance.UI.Controls
 					foreground = SystemColors.WindowColor;
 					border = SystemColors.WindowFrameColor;
 					break;
-					
+
 				case BlurWindowThemeMode.Accent:
 					background = WindowsTheme.Accent.Current;
 					foreground = SystemColors.WindowColor;
@@ -338,7 +335,7 @@ namespace MetroRadiance.UI.Controls
 			}
 		}
 
-		internal protected void ChangeProperties(Color background, Color foreground, Color border, Thickness borderThickness)
+		protected internal void ChangeProperties(Color background, Color foreground, Color border, Thickness borderThickness)
 		{
 			this.Background = new SolidColorBrush(background);
 			this.Foreground = new SolidColorBrush(foreground);

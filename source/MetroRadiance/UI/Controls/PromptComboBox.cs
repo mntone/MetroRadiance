@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -30,7 +28,7 @@ namespace MetroRadiance.UI.Controls
 		}
 
 
-		#region Prompt 依存関係プロパティ
+		#region Prompt dependency property
 
 		public string Prompt
 		{
@@ -38,11 +36,11 @@ namespace MetroRadiance.UI.Controls
 			set { this.SetValue(PromptProperty, value); }
 		}
 		public static readonly DependencyProperty PromptProperty =
-			DependencyProperty.Register("Prompt", typeof(string), typeof(PromptComboBox), new UIPropertyMetadata(""));
+			DependencyProperty.Register(nameof(Prompt), typeof(string), typeof(PromptComboBox), new UIPropertyMetadata(""));
 
 		#endregion
 
-		#region PromptBrush 依存関係プロパティ
+		#region PromptBrush dependency property
 
 		public Brush PromptBrush
 		{
@@ -50,11 +48,11 @@ namespace MetroRadiance.UI.Controls
 			set { this.SetValue(PromptBrushProperty, value); }
 		}
 		public static readonly DependencyProperty PromptBrushProperty =
-			DependencyProperty.Register("PromptBrush", typeof(Brush), typeof(PromptComboBox), new UIPropertyMetadata(Brushes.Gray));
+			DependencyProperty.Register(nameof(PromptBrush), typeof(Brush), typeof(PromptComboBox), new UIPropertyMetadata(Brushes.Gray));
 
 		#endregion
 
-		#region EditableText 依存関係プロパティ
+		#region EditableText dependency property
 
 		public string EditableText
 		{
@@ -63,7 +61,7 @@ namespace MetroRadiance.UI.Controls
 		}
 
 		public static readonly DependencyProperty EditableTextProperty =
-			DependencyProperty.Register("EditableText", typeof(string), typeof(PromptComboBox), new UIPropertyMetadata("", EditableTextChangedCallback));
+			DependencyProperty.Register(nameof(EditableText), typeof(string), typeof(PromptComboBox), new UIPropertyMetadata("", EditableTextChangedCallback));
 
 		private static void EditableTextChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{

@@ -11,9 +11,11 @@ namespace MetroRadiance.Chrome
 	[TemplatePart(Name = PART_BottomLeftThumb, Type = typeof(FrameworkElement))]
 	public sealed class LeftGlowingEdge : GlowingEdge
 	{
+#pragma warning disable IDE1006
 		private const string PART_LeftThumb = nameof(PART_LeftThumb);
 		private const string PART_TopLeftThumb = nameof(PART_TopLeftThumb);
 		private const string PART_BottomLeftThumb = nameof(PART_BottomLeftThumb);
+#pragma warning restore IDE1006
 
 		static LeftGlowingEdge()
 		{

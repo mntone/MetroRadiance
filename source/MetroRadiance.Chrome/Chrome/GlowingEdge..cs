@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,9 +13,12 @@ namespace MetroRadiance.Chrome
 	[TemplatePart(Name = PART_GradientBrush, Type = typeof(GradientBrush))]
 	public abstract class GlowingEdge : Control, IValueConverter
 	{
+#pragma warning disable IDE1006
 		private const string PART_GradientBrush = nameof(PART_GradientBrush);
+#pragma warning restore IDE1006
 
 		#region Infrastructures
+#pragma warning disable IDE1006
 		// ReSharper disable InconsistentNaming
 
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -27,6 +28,7 @@ namespace MetroRadiance.Chrome
 		public static double __CornerThickness => ChromeWindow.Thickness * 2;
 
 		// ReSharper restore InconsistentNaming
+#pragma warning restore IDE1006
 		#endregion
 
 		#region CanResize dependency property

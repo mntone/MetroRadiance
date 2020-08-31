@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace MetroRadiance.Interop.Win32
 {
+#pragma warning disable IDE1006
 	[StructLayout(LayoutKind.Sequential)]
 	public struct APPBARDATA
 	{
@@ -14,4 +15,5 @@ namespace MetroRadiance.Interop.Win32
 		public RECT rc;
 		public IntPtr lParam;
 	}
+#pragma warning restore IDE1006
 }

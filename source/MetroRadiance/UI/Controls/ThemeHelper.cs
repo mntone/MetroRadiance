@@ -2,30 +2,28 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace MetroRadiance.UI.Controls
 {
 	public static class ThemeHelper
 	{
-		private static readonly Dictionary<FrameworkElement, IDisposable> registeredElements = new Dictionary<FrameworkElement, IDisposable>();
+		private static readonly Dictionary<FrameworkElement, IDisposable> _registeredElements = new Dictionary<FrameworkElement, IDisposable>();
 		
 		private static void RemoveResources(FrameworkElement element)
 		{
-			IDisposable disposable;
-			if (registeredElements.TryGetValue(element, out disposable))
+			if (_registeredElements.TryGetValue(element, out var disposable))
 			{
-				registeredElements.Remove(element);
+				_registeredElements.Remove(element);
 				disposable.Dispose();
 			}
 		}
 
-		#region HasThemeResources 添付プロパティ
+		#region HasThemeResources dependency property
 
 		public static readonly DependencyProperty HasThemeResourcesProperty = DependencyProperty.RegisterAttached(
 			"HasThemeResources",
-			typeof(bool), 
+			typeof(bool),
 			typeof(ThemeService),
 			new PropertyMetadata(false, HasThemeResourcesChangedCallback));
 
@@ -58,7 +56,7 @@ namespace MetroRadiance.UI.Controls
 				else if (!oldValue && newValue)
 				{
 					// false -> true
-					registeredElements[element] = ThemeService.Current.Register(element.Resources);
+					_registeredElements[element] = ThemeService.Current.Register(element.Resources);
 					element.Unloaded += ElementUnloadedCallback;
 				}
 			};

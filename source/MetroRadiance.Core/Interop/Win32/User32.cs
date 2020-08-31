@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -32,9 +31,11 @@ namespace MetroRadiance.Interop.Win32
 			return (WindowExStyles)SetWindowLong(hWnd, (int)WindowLongFlags.GWL_EXSTYLE, (int)dwNewLong);
 		}
 
+#pragma warning disable IDE1006
 		[DllImport("user32.dll", EntryPoint = "SetWindowPos", SetLastError = true, ExactSpelling = true)]
 		[return: MarshalAs(UnmanagedType.Bool)]
 		private static extern bool _SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, SetWindowPosFlags flags);
+#pragma warning restore IDE1006
 
 		public static void SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int x, int y, int cx, int cy, SetWindowPosFlags flags)
 		{

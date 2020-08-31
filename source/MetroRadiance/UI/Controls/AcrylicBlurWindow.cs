@@ -14,7 +14,7 @@ namespace MetroRadiance.UI.Controls
 			IsAcrylicBlurEnabled = Environment.OSVersion.Version.Build >= 17004;
 		}
 
-		internal protected override void HandleThemeChanged()
+		protected internal override void HandleThemeChanged()
 		{
 			if (WindowsTheme.HighContrast.Current)
 			{

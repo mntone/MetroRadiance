@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
@@ -16,15 +14,15 @@ namespace MetroRadiance.Interop
 	{
 		public static readonly Dpi Default = new Dpi(96, 96);
 
-		private double? scaleX;
-		private double? scaleY;
+		private double? _scaleX;
+		private double? _scaleY;
 
 		public uint X { get; }
 		public uint Y { get; }
 
-		public double ScaleX => this.scaleX ?? (this.scaleX = this.X / (double)Default.X).Value;
+		public double ScaleX => this._scaleX ?? (this._scaleX = this.X / (double)Default.X).Value;
 
-		public double ScaleY => this.scaleY ?? (this.scaleY = this.Y / (double)Default.Y).Value;
+		public double ScaleY => this._scaleY ?? (this._scaleY = this.Y / (double)Default.Y).Value;
 
 		public Dpi(uint x, uint y)
 			: this()

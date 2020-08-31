@@ -13,7 +13,7 @@ namespace MetroRadiance.Interop.Win32
 		{
 			return (AppBarState)SHAppBarMessage(AppBarMessages.ABM_GETSTATE, ref pData);
 		}
-		
+
 		public static AppBarEdges SHAppBarGetTaskbarPos(RECT rc)
 		{
 			var data = new APPBARDATA()

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -41,7 +39,9 @@ namespace MetroRadiance.Chrome.Primitives
 				new FrameworkPropertyMetadata(WindowStyle.None));
 		}
 
+#pragma warning disable IDE1006
 		private const string PART_GlowingEdge = nameof(PART_GlowingEdge);
+#pragma warning restore IDE1006
 
 		public static double Thickness { get; set; } = 8.0;
 

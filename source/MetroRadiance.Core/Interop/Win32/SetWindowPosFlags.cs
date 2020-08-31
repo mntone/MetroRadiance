@@ -27,7 +27,7 @@ namespace MetroRadiance.Interop.Win32
 		SWP_SHOWWINDOW = 0x0040,
 		SWP_HIDEWINDOW = 0x0080,
 		SWP_NOCOPYBITS = 0x0100,
-		
+
 		/// <summary>
 		/// Does not change the owner window's position in the Z order.
 		/// </summary>
@@ -37,12 +37,12 @@ namespace MetroRadiance.Interop.Win32
 		/// Prevents the window from receiving the WM_WINDOWPOSCHANGING message.
 		/// </summary>
 		SWP_NOSENDCHANGING = 0x0400,
-		
+
 		/// <summary>
 		/// Prevents generation of the WM_SYNCPAINT message.
 		/// </summary>
 		SWP_DEFERERASE = 0x2000,
-		
+
 		/// <summary>
 		/// If the calling thread and the thread that owns the window are attached to different input queues,
 		/// the system posts the request to the thread that owns the window.
