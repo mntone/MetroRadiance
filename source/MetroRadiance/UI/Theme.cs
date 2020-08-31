@@ -33,7 +33,7 @@ namespace MetroRadiance.UI
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is Theme && this.Equals((Theme)obj);
+			return obj is Theme theme && this.Equals(theme);
 		}
 
 		public override int GetHashCode()

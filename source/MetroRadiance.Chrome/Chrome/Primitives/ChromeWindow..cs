@@ -314,8 +314,10 @@ namespace MetroRadiance.Chrome.Primitives
 		{
 			base.OnSourceInitialized(e);
 
-			var source = PresentationSource.FromVisual(this) as HwndSource;
-			if (source == null) throw new InvalidOperationException("HwndSource is missing.");
+			if (!(PresentationSource.FromVisual(this) is HwndSource source))
+			{
+				throw new InvalidOperationException("HwndSource is missing.");
+			}
 
 			this._source = source;
 			this._source.AddHook(this.WndProc);
@@ -331,8 +333,7 @@ namespace MetroRadiance.Chrome.Primitives
 			User32.SetWindowLong(this._handle, wndStyle & ~WindowStyles.WS_SYSMENU);
 			User32.SetWindowLongEx(this._handle, wexStyle | WindowExStyles.WS_EX_TOOLWINDOW);
 
-			var wrapper = this.Owner as WindowWrapper;
-			if (wrapper != null)
+			if (this.Owner is WindowWrapper wrapper)
 			{
 				base.Owner = wrapper.Window;
 			}

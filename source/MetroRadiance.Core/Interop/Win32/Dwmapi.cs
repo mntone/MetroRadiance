@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
@@ -22,22 +21,19 @@ namespace MetroRadiance.Interop.Win32
 
 		public static bool DwmGetCloaked(IntPtr hWnd)
 		{
-			bool cloaked;
-			DwmGetWindowAttributeAsBoolean(hWnd, DWMWINDOWATTRIBUTE.DWMWA_CLOAKED, out cloaked, (uint)Marshal.SizeOf(typeof(bool)));
+			DwmGetWindowAttributeAsBoolean(hWnd, DWMWINDOWATTRIBUTE.DWMWA_CLOAKED, out var cloaked, (uint)Marshal.SizeOf(typeof(bool)));
 			return cloaked;
 		}
 
 		public static RECT DwmGetCaptionButtonBounds(IntPtr hWnd)
 		{
-			RECT rect;
-			DwmGetWindowAttributeAsRectangle(hWnd, DWMWINDOWATTRIBUTE.DWMWA_CAPTION_BUTTON_BOUNDS, out rect, (uint)Marshal.SizeOf(typeof(RECT)));
+			DwmGetWindowAttributeAsRectangle(hWnd, DWMWINDOWATTRIBUTE.DWMWA_CAPTION_BUTTON_BOUNDS, out var rect, (uint)Marshal.SizeOf(typeof(RECT)));
 			return rect;
 		}
 
 		public static RECT DwmGetExtendedFrameBounds(IntPtr hWnd)
 		{
-			RECT rect;
-			DwmGetWindowAttributeAsRectangle(hWnd, DWMWINDOWATTRIBUTE.DWMWA_EXTENDED_FRAME_BOUNDS, out rect, (uint)Marshal.SizeOf(typeof(RECT)));
+			DwmGetWindowAttributeAsRectangle(hWnd, DWMWINDOWATTRIBUTE.DWMWA_EXTENDED_FRAME_BOUNDS, out var rect, (uint)Marshal.SizeOf(typeof(RECT)));
 			return rect;
 		}
 	}

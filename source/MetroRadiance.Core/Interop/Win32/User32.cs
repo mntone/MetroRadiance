@@ -52,8 +52,7 @@ namespace MetroRadiance.Interop.Win32
 
 		public static WINDOWPLACEMENT GetWindowPlacement(IntPtr hWnd)
 		{
-			WINDOWPLACEMENT wndpl;
-			if (!GetWindowPlacement(hWnd, out wndpl)) 
+			if (!GetWindowPlacement(hWnd, out var wndpl))
 			{
 				throw new Win32Exception(Marshal.GetLastWin32Error());
 			}
@@ -69,8 +68,7 @@ namespace MetroRadiance.Interop.Win32
 
 		public static RECT GetWindowRect(IntPtr hWnd)
 		{
-			RECT rect;
-			var ret = GetWindowRect(hWnd, out rect);
+			var ret = GetWindowRect(hWnd, out var rect);
 			if (!ret) throw new Win32Exception(Marshal.GetLastWin32Error());
 			return rect;
 		}

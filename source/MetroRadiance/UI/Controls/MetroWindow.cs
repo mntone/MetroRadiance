@@ -124,11 +124,8 @@ namespace MetroRadiance.UI.Controls
 
 		private static void IsCaptionBarChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var instance = d as FrameworkElement;
-			if (instance == null) return;
-
-			var window = GetWindow(instance) as MetroWindow;
-			if (window == null) return;
+			if (!(d is FrameworkElement instance)) return;
+			if (!(GetWindow(instance) is MetroWindow window)) return;
 
 			window._captionBar = (bool)e.NewValue ? instance : null;
 

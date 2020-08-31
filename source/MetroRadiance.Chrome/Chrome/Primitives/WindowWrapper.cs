@@ -83,8 +83,10 @@ namespace MetroRadiance.Chrome.Primitives
 			this.Window = window;
 			this.Window.SourceInitialized += (sender, args) =>
 			{
-				var source = PresentationSource.FromVisual(this.Window) as HwndSource;
-				if (source != null) this.Handle = source.Handle;
+				if (PresentationSource.FromVisual(this.Window) is HwndSource source)
+				{
+					this.Handle = source.Handle;
+				}
 			};
 			this.Window.SizeChanged += (sender, args) => this.SizeChanged?.Invoke(this, EventArgs.Empty);
 		}

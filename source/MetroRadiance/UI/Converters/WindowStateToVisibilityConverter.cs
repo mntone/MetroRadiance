@@ -24,11 +24,9 @@ namespace MetroRadiance.UI.Converters
 		/// <returns><see cref="WindowState"/> 値から <see cref="Visibility"/> 値への変換結果。</returns>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			if (!(value is WindowState)) return Visibility.Collapsed;
+			if (!(value is WindowState state)) return Visibility.Collapsed;
 
-			var state = (WindowState)value;
-			var param = parameter as string;
-			var isReverse = (param != null && (string.Compare(param, "Reverse", StringComparison.OrdinalIgnoreCase) == 0));
+			var isReverse = parameter is string param && (string.Compare(param, "Reverse", StringComparison.OrdinalIgnoreCase) == 0);
 
 			return state == WindowState.Normal
 				? isReverse ? Visibility.Collapsed : Visibility.Visible

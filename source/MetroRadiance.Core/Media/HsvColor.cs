@@ -33,7 +33,7 @@ namespace MetroRadiance.Media
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is HsvColor && this.Equals((HsvColor)obj);
+			return obj is HsvColor color && this.Equals(color);
 		}
 
 		public override int GetHashCode()

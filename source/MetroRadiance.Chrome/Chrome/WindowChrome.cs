@@ -145,8 +145,7 @@ namespace MetroRadiance.Chrome
 
 		private static void InstanceChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
 		{
-			var window = d as Window;
-			if (window == null) return;
+			if (!(d is Window window)) return;
 
 			var oldValue = (WindowChrome)e.OldValue;
 			var newValue = (WindowChrome)e.NewValue;

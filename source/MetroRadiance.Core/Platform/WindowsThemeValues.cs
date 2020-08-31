@@ -67,9 +67,8 @@ namespace MetroRadiance.Platform
 			}
 			else
 			{
-				bool opaque;
 				// Note: return the modified value on Windows Vista & 7
-				Dwmapi.DwmGetColorizationColor(out color, out opaque);
+				Dwmapi.DwmGetColorizationColor(out color, out _);
 			}
 
 			return ColorHelper.GetColorFromUInt32(color);
@@ -160,9 +159,7 @@ namespace MetroRadiance.Platform
 	{
 		protected override bool GetValue()
 		{
-			uint color;
-			bool opaque;
-			Dwmapi.DwmGetColorizationColor(out color, out opaque);
+			Dwmapi.DwmGetColorizationColor(out _, out var opaque);
 			return !opaque;
 		}
 

@@ -75,7 +75,7 @@ namespace MetroRadiance.Interop
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is Dpi && this.Equals((Dpi)obj);
+			return obj is Dpi dpi && this.Equals(dpi);
 		}
 
 		public override int GetHashCode()

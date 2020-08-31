@@ -34,8 +34,7 @@ namespace MetroRadiance.UI.Controls
 			var window = (Window)sender;
 			window.SourceInitialized -= this.Initialize;
 
-			var source = PresentationSource.FromVisual(window) as HwndSource;
-			if (source != null)
+			if (PresentationSource.FromVisual(window) is HwndSource source)
 			{
 				source.AddHook(this.WndProc);
 				window.Closed += (o, args) => source.RemoveHook(this.WndProc);

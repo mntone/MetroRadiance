@@ -57,8 +57,7 @@ namespace MetroRadiance.Showcase.UI
 				.Where(IsValidWindow)
 				.Select(hWnd =>
 				{
-					uint pid;
-					NativeMethods.GetWindowThreadProcessId(hWnd, out pid);
+					NativeMethods.GetWindowThreadProcessId(hWnd, out var pid);
 
 					var process = Process.GetProcessById((int)pid);
 					return Tuple.Create(process, hWnd);

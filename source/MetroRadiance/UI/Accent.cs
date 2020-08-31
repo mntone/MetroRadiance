@@ -51,7 +51,7 @@ namespace MetroRadiance.UI
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is Accent && this.Equals((Accent)obj);
+			return obj is Accent accent && this.Equals(accent);
 		}
 
 		public override int GetHashCode()

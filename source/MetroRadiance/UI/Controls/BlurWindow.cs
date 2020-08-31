@@ -233,8 +233,7 @@ namespace MetroRadiance.UI.Controls
 
 		protected internal void ToDefault()
 		{
-			Color background, foreground;
-			this.GetColors(out background, out foreground);
+			this.GetColors(out var background, out var foreground);
 
 			WindowComposition.Disable(this);
 			this.ChangeProperties(background, foreground, SystemColors.WindowFrameColor, this.GetBordersFlagAsThickness(1));
@@ -242,8 +241,7 @@ namespace MetroRadiance.UI.Controls
 
 		protected internal void ToBlur()
 		{
-			Color background, foreground;
-			this.GetColors(out background, out foreground);
+			this.GetColors(out var background, out var foreground);
 
 			background.A = (byte)(background.A * this.BlurOpacity);
 			WindowComposition.EnableBlur(this, this.BordersFlag);
@@ -305,8 +303,7 @@ namespace MetroRadiance.UI.Controls
 
 		protected internal void ToCompatibility()
 		{
-			Color background, foreground, border;
-			this.GetColorsCompatibility(out background, out foreground, out border);
+			this.GetColorsCompatibility(out var background, out var foreground, out var border);
 
 			this.ChangeProperties(background, foreground, border, new Thickness());
 		}

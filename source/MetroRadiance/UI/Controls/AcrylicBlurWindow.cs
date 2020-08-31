@@ -40,8 +40,7 @@ namespace MetroRadiance.UI.Controls
 
 		private void ToAcrylicBlur()
 		{
-			Color background, foreground;
-			this.GetColors(out background, out foreground);
+			this.GetColors(out var background, out var foreground);
 
 			background.A = (byte)(background.A * this.BlurOpacity);
 			WindowComposition.EnableAcrylicBlur(this, background, this.BordersFlag);
